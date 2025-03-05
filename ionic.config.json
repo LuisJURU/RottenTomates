@@ -1,0 +1,7 @@
+{
+  "name": "RottenT",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
