@@ -47,3 +47,83 @@ ion-item {
 .custom-menu-button {
   color: white;
 }
+
+.movie-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 16px;
+  padding: 16px;
+}
+
+.movie-item {
+  text-align: center;
+  color: white;
+}
+
+.movie-item ion-thumbnail {
+  width: 100%;
+  height: auto;
+}
+
+.movie-item ion-label {
+  margin-top: 8px;
+}
+
+.carousel-item {
+  text-align: center;
+  color: white;
+}
+
+.carousel-item ion-thumbnail {
+  width: 100%;
+  height: auto;
+}
+
+.carousel-item ion-label {
+  margin-top: 8px;
+}
+
+swiper-container {
+  width: 100%;
+  height: auto; // Cambiado de 100% a auto para ajustar la altura al contenido
+}
+
+swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: auto; // Asegúrate de que los slides se ajusten al contenido
+}
+
+.mySwiper {
+  width: 100%;
+  height: auto; // Ajusta la altura del contenedor Swiper
+}
+
+.filter-container {
+  display: flex;
+  padding: 10px 16px;
+  flex-direction: column-reverse;
+  align-items: baseline;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+}
+
+.filter-item {
+  padding: 5px;
+}
+
+
+ion-select {
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --icon-padding-end: 16px;
+  --icon-padding-start: 16px;
+}
+
+
+ion-segment-button {
+  --background: #000000;
+  --color: #ffffff;
+}

@@ -2,7 +2,7 @@
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-button (click)="goBack()">
-        <ion-icon slot="icon-only" name="arrow-back" color="primary"></ion-icon>
+        <ion-icon name="arrow-back"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-title>{{ movie?.title }}</ion-title>
@@ -11,7 +11,10 @@
 
 <ion-content [fullscreen]="true">
   <div *ngIf="movie" class="movie-header">
-    <img [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" class="movie-poster" />
+    <img
+      [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path"
+      class="movie-poster"
+    />
     <div class="movie-title">
       <h1>{{ movie.title }}</h1>
     </div>
