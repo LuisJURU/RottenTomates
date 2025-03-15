@@ -1,58 +1,24 @@
 import { Injectable } from '@angular/core';
-import axios from 'axios';
-import { from, Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MovieService {
-  private apiUrl = 'https://api.themoviedb.org/3'; // URL base de la API externa
-  private apiKey = 'df909bb4f66f7a249d14982f1d866d25'; // Reemplaza con tu clave de API
+  private backendUrl = 'http://localhost:5000/api/movies'; // URL base del backend
 
-  constructor() { }
-
-  getPopularMovies(page: number = 1): Observable<any> {
-    return from(axios.get(`${this.apiUrl}/movie/popular`, {
-      params: {
-        api_key: this.apiKey,
-        page: page
-      }
-    }).then(response => response.data.results));
-  }
-
-  getNewMovies(page: number = 1): Observable<any> {
-    return from(axios.get(`${this.apiUrl}/movie/now_playing`, {
-      params: {
-        api_key: this.apiKey,
-        page: page
-      }
-    }).then(response => response.data.results));
-  }
-
-  getFeaturedMovies(page: number = 1): Observable<any> {
-    return from(axios.get(`${this.apiUrl}/movie/upcoming`, {
-      params: {
-        api_key: this.apiKey,
-        page: page
-      }
-    }).then(response => response.data.results));
+  constructor(private http: HttpClient) { }
   }
 
   searchMovies(query: string): Observable<any> {
-    return from(axios.get(`${this.apiUrl}/search/movie`, {
-      params: {
-        api_key: this.apiKey,
-        query: query
-      }
-    }).then(response => response.data.results));
+    return this.http.get(`${this.backendUrl}/search`, {
+      params: { query }
+    });
   }
 
   getMovieDetails(movieId: string): Observable<any> {
-    return from(axios.get(`${this.apiUrl}/movie/${movieId}`, {
-      params: {
-        api_key: this.apiKey
-      }
-    }).then(response => response.data));
+    return this.http.get(`${this.backendUrl}/${movieId}`);
   }
 
   getBestMoviesOfMonth(): Observable<any> {
