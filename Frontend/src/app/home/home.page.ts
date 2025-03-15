@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { NavController } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
-import { MovieService } from '../../../services/movie.service';
+import { HttpClient } from '@angular/common/http';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { StarRatingComponent } from '../moviedetailpage/startrating';
 
@@ -17,49 +17,50 @@ import { StarRatingComponent } from '../moviedetailpage/startrating';
 })
 export class HomePage implements OnInit {
   popularMovies: any[] = [];
-  bestMovies: any[] = []; // Variable para almacenar las mejores películas del mes
-  categories: any[] = []; // Variable para almacenar las categorías de películas
-  selectedCategory: string = ''; // Variable para almacenar la categoría seleccionada
-  currentPage: number = 1; // Página actual para la paginación
+  bestMovies: any[] = [];
+  categories: any[] = [];
+  selectedCategory: string = '';
+  currentPage: number = 1;
+  private apiUrl = 'http://localhost:5000/api/movies'; // URL base del backend
 
-  constructor(private navCtrl: NavController, private movieService: MovieService) { }
+  constructor(private navCtrl: NavController, private http: HttpClient) { }
 
   ngOnInit() {
     this.loadPopularMovies();
-    this.loadBestMovies(); // Cargar las mejores películas del mes al inicializar el componente
-    this.loadCategories(); // Cargar las categorías al inicializar el componente
+    this.loadBestMovies();
+    this.loadCategories();
   }
 
   loadPopularMovies(page: number = 1) {
-    this.movieService.getPopularMovies(page).subscribe(
+    this.http.get<any[]>(`${this.apiUrl}/popular`, { params: { page: page.toString() } }).subscribe(
       (movies) => this.popularMovies = [...this.popularMovies, ...movies],
       (error) => console.error('Error loading popular movies', error)
     );
   }
 
   loadNewMovies(page: number = 1) {
-    this.movieService.getNewMovies(page).subscribe(
+    this.http.get<any[]>(`${this.apiUrl}/new`, { params: { page: page.toString() } }).subscribe(
       (movies) => this.popularMovies = [...this.popularMovies, ...movies],
       (error) => console.error('Error loading new movies', error)
     );
   }
 
   loadFeaturedMovies(page: number = 1) {
-    this.movieService.getFeaturedMovies(page).subscribe(
+    this.http.get<any[]>(`${this.apiUrl}/featured`, { params: { page: page.toString() } }).subscribe(
       (movies) => this.popularMovies = [...this.popularMovies, ...movies],
       (error) => console.error('Error loading featured movies', error)
     );
   }
 
   loadBestMovies() {
-    this.movieService.getBestMoviesOfMonth().subscribe(
+    this.http.get<any[]>(`${this.apiUrl}/best`).subscribe(
       (movies) => this.bestMovies = movies,
       (error) => console.error('Error loading best movies of the month', error)
     );
   }
 
   loadCategories() {
-    this.movieService.getCategories().subscribe(
+    this.http.get<any[]>(`${this.apiUrl}/categories`).subscribe(
       (categories) => {
         this.categories = [{ id: '', name: 'All Genres' }, ...categories];
       },
@@ -70,7 +71,7 @@ export class HomePage implements OnInit {
   searchMovies(event: any) {
     const query = event.target.value.toLowerCase();
     if (query && query.trim() !== '') {
-      this.movieService.searchMovies(query).subscribe(
+      this.http.get<any[]>(`${this.apiUrl}/search`, { params: { query: query } }).subscribe(
         (movies) => this.popularMovies = movies,
         (error) => console.error('Error searching movies', error)
       );
@@ -112,7 +113,7 @@ export class HomePage implements OnInit {
   }
 
   loadMoviesByCategory(categoryId: string, page: number = 1) {
-    this.movieService.getMoviesByCategory(categoryId, page).subscribe(
+    this.http.get<any[]>(`${this.apiUrl}/category/${categoryId}`, { params: { page: page.toString() } }).subscribe(
       (movies) => this.popularMovies = [...this.popularMovies, ...movies],
       (error) => console.error('Error loading movies by category', error)
     );

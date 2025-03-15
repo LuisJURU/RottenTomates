@@ -6,44 +6,39 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class MovieService {
-  private backendUrl = 'http://localhost:5000/api/movies'; // URL base del backend
+  private apiUrl = 'http://localhost:3000/api/movies'; // URL base del backend
 
   constructor(private http: HttpClient) { }
+
+  getPopularMovies(page: number = 1): Observable<any> {
+    return this.http.get<any[]>(`${this.apiUrl}/popular`, { params: { page: page.toString() } });
+  }
+
+  getNewMovies(page: number = 1): Observable<any> {
+    return this.http.get<any[]>(`${this.apiUrl}/new`, { params: { page: page.toString() } });
+  }
+
+  getFeaturedMovies(page: number = 1): Observable<any> {
+    return this.http.get<any[]>(`${this.apiUrl}/featured`, { params: { page: page.toString() } });
   }
 
   searchMovies(query: string): Observable<any> {
-    return this.http.get(`${this.backendUrl}/search`, {
-      params: { query }
-    });
+    return this.http.get<any[]>(`${this.apiUrl}/search`, { params: { query: query } });
   }
 
   getMovieDetails(movieId: string): Observable<any> {
-    return this.http.get(`${this.backendUrl}/${movieId}`);
+    return this.http.get<any>(`${this.apiUrl}/details/${movieId}`);
   }
 
   getBestMoviesOfMonth(): Observable<any> {
-    return from(axios.get(`${this.apiUrl}/movie/top_rated`, {
-      params: {
-        api_key: this.apiKey
-      }
-    }).then(response => response.data.results));
+    return this.http.get<any[]>(`${this.apiUrl}/best`);
   }
 
   getCategories(): Observable<any> {
-    return from(axios.get(`${this.apiUrl}/genre/movie/list`, {
-      params: {
-        api_key: this.apiKey
-      }
-    }).then(response => response.data.genres));
+    return this.http.get<any[]>(`${this.apiUrl}/categories`);
   }
 
   getMoviesByCategory(categoryId: string, page: number = 1): Observable<any> {
-    return from(axios.get(`${this.apiUrl}/discover/movie`, {
-      params: {
-        api_key: this.apiKey,
-        with_genres: categoryId,
-        page: page
-      }
-    }).then(response => response.data.results));
+    return this.http.get<any[]>(`${this.apiUrl}/category/${categoryId}`, { params: { page: page.toString() } });
   }
 }
