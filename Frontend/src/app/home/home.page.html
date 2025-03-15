@@ -34,17 +34,44 @@
     <!-- Barra de búsqueda -->
     <ion-searchbar (ionInput)="searchMovies($event)"></ion-searchbar>
 
+    <!-- Filtros -->
+    <div class="filter-container">
+      <ion-item class="filter-item">
+        <ion-label>Categoría</ion-label>
+        <ion-select [(ngModel)]="selectedCategory" (ionChange)="filterCategory($event)">
+          <ion-select-option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-segment (ionChange)="filterMovies($event.detail?.value?.toString())">
+        <ion-segment-button value="popular">
+          <ion-label>Popular</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="new">
+          <ion-label>New</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="featured">
+          <ion-label>Featured</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </div>
+
     <!-- Contenido principal de la página de inicio -->
-    <ion-list>
-      <ion-item *ngFor="let movie of popularMovies" [routerLink]="['/moviedetailpage', movie.id]">
-        <ion-thumbnail slot="start">
+    <div class="movie-grid">
+      <div class="movie-item" *ngFor="let movie of popularMovies" [routerLink]="['/moviedetailpage', movie.id]">
+        <ion-thumbnail>
           <img [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" />
         </ion-thumbnail>
         <ion-label>
           <h2>{{ movie.title }}</h2>
           <p>{{ movie.release_date }}</p>
+          <app-star-rating [rating]="movie.vote_average / 2" [readonly]="true"></app-star-rating>
         </ion-label>
-      </ion-item>
-    </ion-list>
+      </div>
+    </div>
+
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadMoreMovies($event)">
+      <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Cargando más películas...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
   </div>
 </ion-content>
