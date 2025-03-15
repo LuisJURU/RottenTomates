@@ -5,13 +5,14 @@ import { NavController } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
 import { MovieService } from '../../../services/movie.service';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { StarRatingComponent } from '../moviedetailpage/startrating';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
   standalone: true,
-  imports: [CommonModule, IonicModule, RouterModule],
+  imports: [CommonModule, IonicModule, RouterModule, StarRatingComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class HomePage implements OnInit {

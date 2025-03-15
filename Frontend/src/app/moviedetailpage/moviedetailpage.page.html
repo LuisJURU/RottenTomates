@@ -23,11 +23,13 @@
   <ion-card *ngIf="movie">
     <ion-card-header>
       <ion-card-subtitle>{{ movie.release_date }}</ion-card-subtitle>
+      <app-star-rating [rating]="selectedRating" (ratingChange)="onRatingChange($event)"></app-star-rating>
     </ion-card-header>
     <ion-card-content>
       <p>{{ movie.overview }}</p>
       <p><strong>Rating:</strong> {{ movie.vote_average }}</p>
       <p><strong>Votes:</strong> {{ movie.vote_count }}</p>
+      <p *ngIf="selectedRating"><strong>Selected Rating:</strong> {{ selectedRating }}</p>
     </ion-card-content>
   </ion-card>
 </ion-content>

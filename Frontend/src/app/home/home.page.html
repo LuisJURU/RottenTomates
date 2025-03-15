@@ -64,6 +64,7 @@
         <ion-label>
           <h2>{{ movie.title }}</h2>
           <p>{{ movie.release_date }}</p>
+          <app-star-rating [rating]="movie.vote_average / 2" [readonly]="true"></app-star-rating>
         </ion-label>
       </div>
     </div>
