@@ -1,7 +1,7 @@
 const axios = require('axios');
 
-const apiUrl = 'https://api.themoviedb.org/3';
-const apiKey = 'df909bb4f66f7a249d14982f1d866d25'; // Reemplaza con tu clave de API
+const apiUrl = process.env.API_URL;
+const apiKey = process.env.API_KEY; // Reemplaza con tu clave de API
 
 const getPopularMovies = async (page = 1) => {
   const response = await axios.get(`${apiUrl}/movie/popular`, {

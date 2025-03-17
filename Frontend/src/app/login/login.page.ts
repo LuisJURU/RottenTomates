@@ -44,7 +44,7 @@ export class LoginPage implements OnInit {
     }
   
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/login', { // Cambia esta línea
+      const response = await axios.post('http://localhost:5000/api/auth/login', {
         email: this.email,
         password: this.password
       });

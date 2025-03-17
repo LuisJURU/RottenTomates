@@ -14,9 +14,9 @@ connectDB();
 
 // Configurar CORS
 app.use(cors({
-  origin: '*', // Permitir todas las solicitudes de cualquier origen
-  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Métodos permitidos
-  allowedHeaders: ['Content-Type', 'Authorization'] // Encabezados permitidos
+  origin: 'http://localhost:8100', // Permitir solicitudes solo desde este origen
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
 app.use(express.json());
