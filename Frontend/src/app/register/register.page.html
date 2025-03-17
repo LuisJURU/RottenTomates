@@ -15,25 +15,25 @@
     <div class="shape"></div>
     <div class="shape"></div>
   </div>
-  <form>
+  <form (ngSubmit)="register()">
     <h3>Registrate aqui</h3>
 
-    <ion-item>
-      <ion-label position="floating">Email</ion-label>
-      <ion-input type="email" [(ngModel)]="email" name="email"></ion-input>
-    </ion-item>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" [(ngModel)]="email" required>
+    </div>
 
-    <ion-item>
-      <ion-label position="floating">Contraseña</ion-label>
-      <ion-input type="password" [(ngModel)]="password" name="password"></ion-input>
-    </ion-item>
+    <div class="form-group">
+      <label for="password">Contraseña</label>
+      <input type="password" id="password" name="password" [(ngModel)]="password" required>
+    </div>
 
-    <ion-item>
-      <ion-label position="floating">Confirmar Contraseña</ion-label>
-      <ion-input type="password" [(ngModel)]="confirmPassword" name="confirmPassword"></ion-input>
-    </ion-item>
+    <div class="form-group">
+      <label for="confirmPassword">Confirmar Contraseña</label>
+      <input type="password" id="confirmPassword" name="confirmPassword" [(ngModel)]="confirmPassword" required>
+    </div>
 
-    <ion-button expand="full" (click)="register()" [disabled]="isSubmitting">Registro</ion-button>
-    <ion-button expand="full" fill="clear" (click)="navigateToLogin()">Iniciar Sesion</ion-button>
+    <button type="submit" class="btn" [disabled]="isSubmitting">Registro</button>
+    <button type="button" class="clear btn-r" (click)="navigateToLogin()">Iniciar Sesion</button>
   </form>
 </ion-content>
