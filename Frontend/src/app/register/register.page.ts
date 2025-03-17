@@ -18,6 +18,8 @@ export class RegisterPage implements OnInit {
   currentToast: HTMLIonToastElement | null = null;
   isSubmitting: boolean = false;
 
+  private apiUrl = 'https://rotten-tomates-git-main-luis-jarabas-projects.vercel.app/api/users'; // URL base del backend en Vercel
+
   constructor(private navCtrl: NavController, private toastController: ToastController) {
     this.email = '';
     this.password = '';
@@ -52,11 +54,11 @@ export class RegisterPage implements OnInit {
     }
 
     try {
-      const response = await axios.post('http://localhost:5000/api/users/register', {
+      const response = await axios.post(`${this.apiUrl}/register`, {
         email: this.email,
         password: this.password
       });
-      console.log('Registration successful', response.data);
+      console.log('Registration successful');
       this.showToast('Registration successful', 'success');
       this.navCtrl.navigateForward('/login');
     } catch (error) {

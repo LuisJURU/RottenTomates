@@ -48,7 +48,7 @@ export class LoginPage implements OnInit {
         email: this.email,
         password: this.password
       });
-      console.log('Login successful', response.data);
+      console.log('Login successful');
       this.showToast('Inicio de Session Completada', 'success');
       this.navCtrl.navigateForward('/home');
     } catch (error) {
