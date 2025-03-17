@@ -22,6 +22,7 @@ export class HomePage implements OnInit {
   selectedCategory: string = '';
   currentPage: number = 1;
   private apiUrl = 'https://backend-4hqancgim-luis-jarabas-projects.vercel.app/api/movies'; // URL base del backend en Vercel
+  // private apiUrl = 'http://localhost:5000/api/movies'; // URL base del backend
 
   constructor(private navCtrl: NavController, private http: HttpClient) { }
 
