@@ -17,6 +17,8 @@ export class LoginPage implements OnInit {
   currentToast: HTMLIonToastElement | null = null;
   isSubmitting: boolean = false;
 
+  private apiUrl = 'https://rotten-tomates-git-main-luis-jarabas-projects.vercel.app/api/auth'; // URL base del backend en Vercel
+
   constructor(private navCtrl: NavController, private toastController: ToastController) {
     this.email = '';
     this.password = '';
@@ -44,7 +46,7 @@ export class LoginPage implements OnInit {
     }
   
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/login', {
+      const response = await axios.post(`${this.apiUrl}/login`, {
         email: this.email,
         password: this.password
       });
