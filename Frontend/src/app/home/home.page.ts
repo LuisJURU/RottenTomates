@@ -4,6 +4,7 @@ import { IonicModule } from '@ionic/angular';
 import { NavController } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { FormsModule } from '@angular/forms'; // Importa FormsModule
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { StarRatingComponent } from '../moviedetailpage/startrating';
 
@@ -12,7 +13,7 @@ import { StarRatingComponent } from '../moviedetailpage/startrating';
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
   standalone: true,
-  imports: [CommonModule, IonicModule, RouterModule, StarRatingComponent],
+  imports: [CommonModule, IonicModule, RouterModule, FormsModule, StarRatingComponent], // Agrega FormsModule a los imports
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class HomePage implements OnInit {
@@ -21,6 +22,7 @@ export class HomePage implements OnInit {
   categories: any[] = [];
   selectedCategory: string = '';
   currentPage: number = 1;
+  isSidebarOpen: boolean = false; // Estado de la barra lateral
   private apiUrl = 'https://rotten-tomates-git-main-luis-jarabas-projects.vercel.app/api/movies'; // URL base del backend en Vercel
   // private apiUrl = 'http://localhost:5000/api/movies'; // URL base del backend
 
@@ -30,6 +32,10 @@ export class HomePage implements OnInit {
     this.loadPopularMovies();
     this.loadBestMovies();
     this.loadCategories();
+  }
+
+  toggleSidebar() {
+    this.isSidebarOpen = !this.isSidebarOpen;
   }
 
   loadPopularMovies(page: number = 1) {
@@ -81,8 +87,7 @@ export class HomePage implements OnInit {
     }
   }
 
-  filterCategory(event: any) {
-    const categoryId = event.detail.value;
+  filterCategory(categoryId: string) {
     this.selectedCategory = categoryId;
     this.currentPage = 1;
     this.popularMovies = [];
@@ -93,8 +98,7 @@ export class HomePage implements OnInit {
     }
   }
 
-  filterMovies(filterType: string | undefined) {
-    if (typeof filterType !== 'string') return;
+  filterMovies(filterType: string) {
     this.currentPage = 1;
     this.popularMovies = [];
     switch (filterType) {
