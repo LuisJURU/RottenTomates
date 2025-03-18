@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonCardHeader, IonCardContent, IonCardSubtitle, IonCardTitle, IonCard, IonIcon, IonButton, IonButtons } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonCardHeader, IonCardContent, IonCardSubtitle, IonCardTitle, IonCard, IonIcon, IonButton, IonButtons, IonList } from '@ionic/angular/standalone';
 import { MovieService } from '../../../services/movie.service';
 import { StarRatingComponent } from './startrating';
 
@@ -11,7 +11,7 @@ import { StarRatingComponent } from './startrating';
   templateUrl: './moviedetailpage.page.html',
   styleUrls: ['./moviedetailpage.page.scss'],
   standalone: true,
-  imports: [IonButtons, IonButton, IonIcon, IonCard, IonCardTitle, IonCardSubtitle, IonCardContent, IonCardHeader, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, StarRatingComponent]
+  imports: [IonList, IonButtons, IonButton, IonIcon, IonCard, IonCardTitle, IonCardSubtitle, IonCardContent, IonCardHeader, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, StarRatingComponent]
 })
 export class MoviedetailpagePage implements OnInit {
   movie: any;
