@@ -27,7 +27,7 @@ addIcons({
       </ion-icon>
     </div>
   `,
-  styleUrls: ['./star-rating.component.scss'],
+  styleUrls: ['./startrating.scss'],
   standalone: true,
   imports: [CommonModule, IonicModule]
 })
