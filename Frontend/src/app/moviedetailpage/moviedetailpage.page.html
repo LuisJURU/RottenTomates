@@ -30,6 +30,18 @@
       <p><strong>Rating:</strong> {{ movie.vote_average }}</p>
       <p><strong>Votes:</strong> {{ movie.vote_count }}</p>
       <p *ngIf="selectedRating"><strong>Selected Rating:</strong> {{ selectedRating }}</p>
+
+      <!-- Campo para el comentario, visible solo si hay una calificación -->
+      <div *ngIf="selectedRating > 0">
+        <ion-item>
+          <ion-label position="stacked">Comentario (opcional)</ion-label>
+          <ion-textarea [(ngModel)]="userComment" maxlength="1000" placeholder="Escribe tu comentario aquí..."></ion-textarea>
+          <ion-note slot="helper">Máximo 1000 caracteres</ion-note>
+        </ion-item>
+
+        <!-- Botón para guardar la calificación y el comentario -->
+        <ion-button expand="block" (click)="saveRatingAndComment()">Guardar</ion-button>
+      </div>
     </ion-card-content>
   </ion-card>
 </ion-content>

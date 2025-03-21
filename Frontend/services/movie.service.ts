@@ -41,4 +41,8 @@ export class MovieService {
   getMoviesByCategory(categoryId: string, page: number = 1): Observable<any> {
     return this.http.get<any[]>(`${this.apiUrl}/category/${categoryId}`, { params: { page: page.toString() } });
   }
+
+  rateMovie(movieId: string, rating: number, comment: string): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/rate`, { movieId, rating, comment });
+  }
 }

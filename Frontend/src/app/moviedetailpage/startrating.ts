@@ -32,9 +32,9 @@ addIcons({
   imports: [CommonModule, IonicModule]
 })
 export class StarRatingComponent implements AfterViewInit {
-  @Input() rating: number = 0;
-  @Input() readonly: boolean = false;
-  @Output() ratingChange = new EventEmitter<number>();
+  @Input() rating: number = 0; // Valor de la calificación
+  @Input() readonly: boolean = false; // Propiedad para deshabilitar la interacción
+  @Output() ratingChange = new EventEmitter<number>(); // Evento para emitir cambios en la calificación
 
   private dragging: boolean = false;
 
@@ -62,8 +62,7 @@ export class StarRatingComponent implements AfterViewInit {
 
   onStarClick(starValue: number) {
     if (!this.readonly) {
-      this.rating = starValue;
-      this.ratingChange.emit(this.rating);
+      this.setRating(starValue);
     }
   }
 
@@ -89,7 +88,11 @@ export class StarRatingComponent implements AfterViewInit {
     const clientX = event instanceof MouseEvent ? event.clientX : event.touches[0].clientX;
     const x = clientX - rect.left;
     const newRating = Math.min(Math.max(Math.round((x / rect.width) * 10) / 2, 0), 5);
-    this.rating = newRating;
-    this.ratingChange.emit(this.rating);
+    this.setRating(newRating);
+  }
+
+  setRating(rating: number) {
+    this.rating = rating;
+    this.ratingChange.emit(this.rating); // Emitir el cambio de calificación
   }
 }
