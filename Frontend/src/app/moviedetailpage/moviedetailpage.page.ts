@@ -52,22 +52,28 @@ export class MoviedetailpagePage implements OnInit {
   }
 
   saveRatingAndComment() {
-    const commentData = {
-      movieId: this.movie.id,
+    if (!this.movie || !this.selectedRating) {
+      console.error('Debe seleccionar una calificación antes de guardar.');
+      return;
+    }
+
+    const payload = {
       rating: this.selectedRating,
       comment: this.userComment,
     };
-  
-    console.log('Datos enviados:', commentData); // Verifica los datos
-  
-    this.http.post('https://rotten-tomates-git-main-luis-jarabas-projects.vercel.app/api/comments', commentData).subscribe(
+
+    console.log('Enviando datos:', payload);
+
+    this.movieService.rateMovie(this.movie.id, this.selectedRating, this.userComment).subscribe(
       (response) => {
-        console.log('Comentario guardado:', response);
-        alert('¡Comentario guardado con éxito!');
+        console.log('Respuesta del servidor:', response);
+        alert('¡Gracias por tu opinión!');
+        this.userComment = '';
+        this.selectedRating = 0;
       },
       (error) => {
-        console.error('Error al guardar el comentario:', error);
-        alert('Hubo un error al guardar el comentario.');
+        console.error('Error al guardar la calificación y el comentario:', error);
+        alert('Hubo un error al guardar tu opinión. Inténtalo de nuevo.');
       }
     );
   }

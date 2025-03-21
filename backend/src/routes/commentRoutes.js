@@ -1,27 +1,24 @@
 const express = require('express');
 const router = express.Router();
-const Comment = require('../models/Comment');
+const Comment = require('../models/Comment'); // Asegúrate de que la ruta sea correcta
 
-// Ruta para guardar un comentario (sin autenticación)
-router.post('/', async (req, res) => {
-  const { movieId, rating, comment } = req.body;
-
-  if (!movieId || !rating) {
-    return res.status(400).json({ message: 'Faltan datos requeridos' });
-  }
+// Endpoint para obtener comentarios por ID de película
+router.get('/comments/:movieId', async (req, res) => {
+  const { movieId } = req.params;
 
   try {
-    const newComment = new Comment({
-      movieId,
-      userId: null, // Si no estás usando autenticación
-      rating,
-      comment,
-    });
+    // Buscar comentarios por ID de película
+    const comments = await Comment.find({ movieId });
 
-    const savedComment = await newComment.save();
-    res.status(201).json(savedComment);
+    if (comments.length === 0) {
+      return res.status(404).json({ message: 'No se encontraron comentarios para esta película.' });
+    }
+
+    res.json(comments);
   } catch (error) {
-    console.error('Error al guardar el comentario:', error); // Log detallado
-    res.status(500).json({ message: 'Error al guardar el comentario', error: error.message });
+    console.error('Error al obtener los comentarios:', error.message);
+    res.status(500).json({ message: 'Error al obtener los comentarios.' });
   }
 });
+
+module.exports = router;
