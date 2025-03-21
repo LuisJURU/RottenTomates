@@ -23,10 +23,10 @@ export class HomePage implements OnInit {
   selectedCategory: string = '';
   currentPage: number = 1;
   isSidebarOpen: boolean = false; // Estado de la barra lateral
+  isLoading: boolean = false; // Bandera para evitar múltiples cargas
   private apiUrl = 'https://rotten-tomates-git-main-luis-jarabas-projects.vercel.app/api/movies'; // URL base del backend en Vercel
-  // private apiUrl = 'http://localhost:5000/api/movies'; // URL base del backend
 
-  constructor(private navCtrl: NavController, private http: HttpClient) { }
+  constructor(private navCtrl: NavController, private http: HttpClient) {}
 
   ngOnInit() {
     this.loadPopularMovies();
@@ -117,21 +117,45 @@ export class HomePage implements OnInit {
     }
   }
 
+  onScroll(event: any) {
+    const scrollElement = event.target;
+
+    // Verifica si el usuario ha llegado al final del contenedor
+    if (scrollElement.scrollHeight - scrollElement.scrollTop <= scrollElement.clientHeight + 100) {
+      this.loadMoreMovies();
+    }
+  }
+
   loadMoviesByCategory(categoryId: string, page: number = 1) {
     this.http.get<any[]>(`${this.apiUrl}/category/${categoryId}`, { params: { page: page.toString() } }).subscribe(
-      (movies) => this.popularMovies = [...this.popularMovies, ...movies],
-      (error) => console.error('Error loading movies by category', error)
+      (movies) => {
+        this.popularMovies = [...this.popularMovies, ...movies];
+        this.isLoading = false; // Restablece la bandera después de la carga
+      },
+      (error) => {
+        console.error('Error loading movies by category', error);
+        this.isLoading = false; // Restablece la bandera incluso si hay un error
+      }
     );
   }
 
-  loadMoreMovies(event: any) {
-    this.currentPage++;
-    if (this.selectedCategory) {
-      this.loadMoviesByCategory(this.selectedCategory, this.currentPage);
-    } else {
-      this.loadPopularMovies(this.currentPage);
+  loadMoreMovies() {
+    if (this.isLoading) {
+      return; // Si ya se está cargando, no hacer nada
     }
-    event.target.complete();
+
+    this.isLoading = true; // Indica que la carga está en progreso
+
+    if (this.selectedCategory) {
+      this.loadMoviesByCategory(this.selectedCategory, ++this.currentPage);
+    } else {
+      this.loadPopularMovies(++this.currentPage);
+    }
+
+    // Simula un retraso para asegurarse de que la bandera se actualice correctamente
+    setTimeout(() => {
+      this.isLoading = false; // Restablece la bandera después de la carga
+    }, 1000); // Ajusta el tiempo según sea necesario
   }
 
   logout() {

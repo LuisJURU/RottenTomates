@@ -210,3 +210,31 @@ span {
   margin-top: 10px;
   margin-right: 1rem;
 }
+
+/* filepath: c:\Users\luis3\OneDrive\Desktop\RottenT\Frontend\src\app\home\home.page.scss */
+.movie-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 16px;
+  padding: 16px;
+}
+
+/* filepath: c:\Users\luis3\OneDrive\Desktop\RottenT\Frontend\src\app\home\home.page.scss */
+.search-container {
+  padding: 10px 16px;
+  text-align: center;
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  outline: none;
+}
+
+.search-input:focus {
+  border-color: #dd2476;
+  box-shadow: 0 0 5px rgba(221, 36, 118, 0.5);
+}
