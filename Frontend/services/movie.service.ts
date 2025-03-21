@@ -6,6 +6,9 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class MovieService {
+  getComments(id: any) {
+    throw new Error('Method not implemented.');
+  }
   private apiUrl = 'http://localhost:5000/api/movies'; // URL base del backend
 
   constructor(private http: HttpClient) { }

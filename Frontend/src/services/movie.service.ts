@@ -80,4 +80,10 @@ export class MovieService {
       }
     }).then(response => response.data.results));
   }
+
+  rateMovie(movieId: string, rating: number, comment: string): Observable<any> {
+    const payload = { movieId, rating, comment };
+    const apiUrl = 'https://rotten-tomates-git-main-luis-jarabas-projects.vercel.app/api/rate';
+    return from(axios.post(apiUrl, payload).then(response => response.data));
+  }
 }

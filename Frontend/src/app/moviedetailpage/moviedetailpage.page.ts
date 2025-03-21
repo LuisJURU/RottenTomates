@@ -60,14 +60,13 @@ export class MoviedetailpagePage implements OnInit {
       console.error('Debe seleccionar una calificación antes de guardar.');
       return;
     }
-
-    const payload = {
+  
+    console.log('Enviando datos:', {
+      movieId: this.movie.id,
       rating: this.selectedRating,
       comment: this.userComment,
-    };
-
-    console.log('Enviando datos:', payload);
-
+    });
+  
     this.movieService.rateMovie(this.movie.id, this.selectedRating, this.userComment).subscribe(
       (response) => {
         console.log('Respuesta del servidor:', response);
@@ -77,7 +76,7 @@ export class MoviedetailpagePage implements OnInit {
       },
       (error) => {
         console.error('Error al guardar la calificación y el comentario:', error);
-        alert('Hubo un error al guardar tu opinión. Inténtalo de nuevo.');
+        alert(`Hubo un error al guardar tu opinión: ${error.message || 'Inténtalo de nuevo.'}`);
       }
     );
   }
