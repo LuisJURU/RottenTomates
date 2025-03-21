@@ -2,76 +2,75 @@
   <ion-toolbar>
     <ion-title>Home</ion-title>
     <ion-buttons slot="start">
-      <ion-menu-button class="custom-menu-button"></ion-menu-button>
+      <ion-button (click)="toggleSidebar()">
+        <ion-icon name="menu-outline"></ion-icon>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" [scrollEvents]="true" (ionScroll)="onScroll($event)">
   <ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">Home</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <ion-menu side="start" menuId="first" contentId="main-content">
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Menu</ion-title>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content>
-      <ion-list>
-        <ion-item button (click)="logout()">
-          <ion-icon slot="start" name="log-out-outline"></ion-icon>
-          <ion-label>Cerrar Sesión</ion-label>
-        </ion-item>
-      </ion-list>
-    </ion-content>
-  </ion-menu>
-
-  <div id="main-content">
-    <!-- Barra de búsqueda -->
-    <ion-searchbar (ionInput)="searchMovies($event)"></ion-searchbar>
-
-    <!-- Filtros -->
-    <div class="filter-container">
-      <ion-item class="filter-item">
-        <ion-label>Categoría</ion-label>
-        <ion-select [(ngModel)]="selectedCategory" (ionChange)="filterCategory($event)">
-          <ion-select-option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</ion-select-option>
-        </ion-select>
-      </ion-item>
-      <ion-segment (ionChange)="filterMovies($event.detail?.value?.toString())">
-        <ion-segment-button value="popular">
-          <ion-label>Popular</ion-label>
-        </ion-segment-button>
-        <ion-segment-button value="new">
-          <ion-label>New</ion-label>
-        </ion-segment-button>
-        <ion-segment-button value="featured">
-          <ion-label>Featured</ion-label>
-        </ion-segment-button>
-      </ion-segment>
+  <div class="sidebar" [class.open]="isSidebarOpen">
+    <div class="sidebar-header">
+      <h2>Menu</h2>
     </div>
+    <ul class="sidebar-list">
+      <li class="sidebar-item" (click)="logout()">
+        <ion-icon name="log-out-outline"></ion-icon>
+        <span>Cerrar Sesión</span>
+      </li>
+    </ul>
+  </div>
 
-    <!-- Contenido principal de la página de inicio -->
-    <div class="movie-grid">
-      <div class="movie-item" *ngFor="let movie of popularMovies" [routerLink]="['/moviedetailpage', movie.id]">
-        <ion-thumbnail>
-          <img [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" />
-        </ion-thumbnail>
-        <ion-label>
-          <h2>{{ movie.title }}</h2>
-          <p>{{ movie.release_date }}</p>
-          <app-star-rating [rating]="movie.vote_average / 2" [readonly]="true"></app-star-rating>
-        </ion-label>
+  <div class="overlay" [class.show]="isSidebarOpen" (click)="toggleSidebar()"></div>
+
+  <!-- Barra de búsqueda -->
+  <div class="search-container">
+    <input 
+      type="search" 
+      placeholder="Buscar películas..." 
+      (input)="searchMovies($event)" 
+      class="search-input"
+    />
+  </div>
+  
+  <!-- Filtros -->
+  <div class="filter-container">
+    <div class="filter-item">
+      <label>Categoría</label>
+      <div>
+        <button class="btn-f" *ngFor="let category of categories" (click)="filterCategory(category.id)">
+          {{ category.name }}
+        </button>
       </div>
     </div>
+    <div class="filter-item">
+      <label>Filtros</label>
+      <div>
+        <button class="btn-f" (click)="filterMovies('popular')">Popular</button>
+        <button class="btn-f" (click)="filterMovies('new')">New</button>
+        <button class="btn-f" (click)="filterMovies('featured')">Featured</button>
+      </div>
+    </div>
+  </div>
 
-    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadMoreMovies($event)">
-      <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Cargando más películas...">
-      </ion-infinite-scroll-content>
-    </ion-infinite-scroll>
+  <!-- Contenido principal de la página de inicio -->
+  <div class="movie-grid">
+    <div class="movie-item" *ngFor="let movie of popularMovies" [routerLink]="['/moviedetailpage', movie.id]">
+      <ion-thumbnail>
+        <img [src]="'https://image.tmdb.org/t/p/w300' + movie.poster_path" />
+      </ion-thumbnail>
+      <ion-label>
+        <h2>{{ movie.title }}</h2>
+        <p>{{ movie.release_date }}</p>
+        <app-star-rating [rating]="movie.vote_average / 2" [readonly]="true"></app-star-rating>
+      </ion-label>
+    </div>
   </div>
 </ion-content>

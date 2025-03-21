@@ -1,10 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-button (click)="goBack()">
-        <ion-icon name="arrow-back"></ion-icon>
-      </ion-button>
-    </ion-buttons>
+      <button class="back-button" (click)="goBack()">← Volver</button>
     <ion-title>{{ movie?.title }}</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -12,24 +8,44 @@
 <ion-content [fullscreen]="true">
   <div *ngIf="movie" class="movie-header">
     <img
-      [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path"
+      [src]="'https://image.tmdb.org/t/p/w300' + movie.poster_path"
       class="movie-poster"
     />
     <div class="movie-title">
-      <h1>{{ movie.title }}</h1>
+      <h1>{{ movie?.title }}</h1>
     </div>
   </div>
 
   <ion-card *ngIf="movie">
     <ion-card-header>
       <ion-card-subtitle>{{ movie.release_date }}</ion-card-subtitle>
-      <app-star-rating [rating]="selectedRating" (ratingChange)="onRatingChange($event)"></app-star-rating>
-    </ion-card-header>
+      <div class="star-rating">
+        <span 
+          *ngFor="let star of stars; let i = index" 
+          (click)="rateMovie(i + 1)" 
+          [class.filled]="i < selectedRating"
+          class="star"
+        >
+          ★
+        </span>
+      </div>    </ion-card-header>
     <ion-card-content>
       <p>{{ movie.overview }}</p>
       <p><strong>Rating:</strong> {{ movie.vote_average }}</p>
       <p><strong>Votes:</strong> {{ movie.vote_count }}</p>
       <p *ngIf="selectedRating"><strong>Selected Rating:</strong> {{ selectedRating }}</p>
+
+      <!-- Campo para el comentario, visible solo si hay una calificación -->
+      <div *ngIf="selectedRating > 0">
+        <div>
+          <label for="userComment">Comentario (opcional)</label>
+          <textarea id="userComment" maxlength="1000" placeholder="Escribe tu comentario aquí..." [(ngModel)]="userComment"></textarea>
+          <small>Máximo 1000 caracteres</small>
+        </div>
+
+        <!-- Botón para guardar la calificación y el comentario -->
+        <ion-button expand="block" (click)="saveRatingAndComment()">Guardar</ion-button>
+      </div>
     </ion-card-content>
   </ion-card>
 </ion-content>

@@ -61,3 +61,59 @@ ion-content {
     }
   }
 }
+
+/* Estilo para el contenedor del comentario */
+div {
+  margin-top: 20px;
+
+  label {
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: var(--ion-color-dark);
+  }
+
+  textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid var(--ion-color-medium);
+    border-radius: 4px;
+    resize: vertical;
+    outline: none;
+
+    &:focus {
+      border-color: var(--ion-color-primary);
+      box-shadow: 0 0 5px var(--ion-color-primary);
+    }
+  }
+
+  small {
+    display: block;
+    margin-top: 5px;
+    font-size: 12px;
+    color: var(--ion-color-medium);
+  }
+}
+
+.star-rating {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0;
+}
+
+.star {
+  font-size: 24px;
+  color: gray;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.star.filled {
+  color: gold;
+}
+
+.star:hover {
+  color: orange;
+}
