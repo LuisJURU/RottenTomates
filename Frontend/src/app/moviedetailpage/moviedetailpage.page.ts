@@ -58,6 +58,8 @@ export class MoviedetailpagePage implements OnInit {
       comment: this.userComment,
     };
   
+    console.log('Datos enviados:', commentData); // Verifica los datos
+  
     this.http.post('https://rotten-tomates-git-main-luis-jarabas-projects.vercel.app/api/comments', commentData).subscribe(
       (response) => {
         console.log('Comentario guardado:', response);

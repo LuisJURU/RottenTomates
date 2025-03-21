@@ -13,7 +13,7 @@ router.post('/', async (req, res) => {
   try {
     const newComment = new Comment({
       movieId,
-      userId: null, // No hay usuario autenticado
+      userId: null, // Si no estás usando autenticación
       rating,
       comment,
     });
@@ -21,9 +21,7 @@ router.post('/', async (req, res) => {
     const savedComment = await newComment.save();
     res.status(201).json(savedComment);
   } catch (error) {
-    console.error('Error al guardar el comentario:', error);
-    res.status(500).json({ message: 'Error al guardar el comentario' });
+    console.error('Error al guardar el comentario:', error); // Log detallado
+    res.status(500).json({ message: 'Error al guardar el comentario', error: error.message });
   }
 });
-
-module.exports = router;
