@@ -117,3 +117,17 @@ div {
 .star:hover {
   color: orange;
 }
+
+.comment {
+  border-bottom: 1px solid #ccc;
+  padding: 10px 0;
+}
+
+.comment:last-child {
+  border-bottom: none;
+}
+
+.comment-date {
+  font-size: 12px;
+  color: #888;
+}

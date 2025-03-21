@@ -1,19 +1,16 @@
 const express = require('express');
 const router = express.Router();
-const Comment = require('../models/Comment'); // Asegúrate de que la ruta sea correcta
+const Comment = require('../models/Comment');
 
 // Endpoint para obtener comentarios por ID de película
 router.get('/comments/:movieId', async (req, res) => {
   const { movieId } = req.params;
 
   try {
-    // Buscar comentarios por ID de película
     const comments = await Comment.find({ movieId });
-
     if (comments.length === 0) {
       return res.status(404).json({ message: 'No se encontraron comentarios para esta película.' });
     }
-
     res.json(comments);
   } catch (error) {
     console.error('Error al obtener los comentarios:', error.message);
