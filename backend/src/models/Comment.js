@@ -1,10 +1,26 @@
 const mongoose = require('mongoose');
 
-const CommentSchema = new mongoose.Schema({
-  movieId: { type: String, required: true }, // ID de la película
-  rating: { type: Number, required: true }, // Calificación del usuario
-  comment: { type: String, required: false }, // Comentario del usuario
-  createdAt: { type: Date, default: Date.now }, // Fecha de creación
+const commentSchema = new mongoose.Schema({
+  movieId: {
+    type: String,
+    required: true,
+  },
+  userId: {
+    type: String,
+    required: true,
+  },
+  rating: {
+    type: Number,
+    required: true,
+  },
+  comment: {
+    type: String,
+    maxlength: 1000,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
-module.exports = mongoose.model('Comment', CommentSchema);
+module.exports = mongoose.model('Comment', commentSchema);
