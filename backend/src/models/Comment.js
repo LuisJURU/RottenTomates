@@ -7,7 +7,7 @@ const commentSchema = new mongoose.Schema({
   },
   userId: {
     type: String,
-    required: true,
+    default: null, // Si no estás usando autenticación
   },
   rating: {
     type: Number,
