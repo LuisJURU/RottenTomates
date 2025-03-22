@@ -1,0 +1,105 @@
+.movie-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 16px;
+  padding: 16px;
+}
+
+.movie-item {
+  text-align: center;
+  color: white;
+}
+
+.movie-item ion-thumbnail {
+  width: 100%;
+  height: 225px; /* Ajusta según sea necesario */
+  background-color: #f0f0f0; /* Fondo por defecto */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.movie-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.movie-item ion-label {
+  margin-top: 8px;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -250px;
+  width: 250px;
+  height: 100%;
+  background-color: #000000;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  transition: left 0.3s ease;
+}
+
+.sidebar.open {
+  left: 0;
+}
+
+.sidebar-header {
+  padding: 20px;
+  background-color: #000000;
+  text-align: center;
+  border-bottom: 1px solid #dd2476;
+}
+
+.sidebar-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-item {
+  padding: 15px 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  color: white;
+}
+
+.sidebar-item ion-icon {
+  margin-right: 10px;
+}
+
+.sidebar-item:hover {
+  background-color: #dd2476;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  display: none;
+}
+
+.overlay.show {
+  display: block;
+}
+
+.add-button {
+  margin-top: 10px;
+  background-color: #dd2476;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.add-button:hover {
+  background-color: #c41f63;
+}
