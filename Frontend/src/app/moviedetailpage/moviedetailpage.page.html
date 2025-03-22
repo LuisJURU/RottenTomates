@@ -66,6 +66,7 @@
         </ion-card-header>
         <ion-card-content>
           <div *ngFor="let comment of comments" class="comment">
+            <p><strong>Usuario:</strong> {{ comment.user?.username || 'Anónimo' }}</p>
             <p><strong>Calificación:</strong> {{ comment.rating }} ★</p>
             <p *ngIf="comment.comment">
               <strong>Comentario:</strong> {{ comment.comment }}
