@@ -92,12 +92,7 @@ export class MoviedetailpagePage implements OnInit {
     const apiUrl = `https://rotten-tomates-git-main-luis-jarabas-projects.vercel.app/api/comments/${this.movie.id}`;
     this.http.get(apiUrl).subscribe(
       (response: any) => {
-        this.comments = response.map((comment: any) => ({
-          username: comment.user?.username || 'Anónimo', // Asegúrate de manejar usuarios sin nombre
-          rating: comment.rating,
-          comment: comment.comment,
-          createdAt: comment.createdAt
-        }));
+        this.comments = response; // Almacena los comentarios en la variable
         console.log('Comentarios cargados:', this.comments);
       },
       (error) => {
