@@ -1,5 +1,4 @@
 const axios = require('axios');
-const Comment = require('../models/Comment'); // Importa el modelo Comment
 
 const apiUrl = process.env.API_URL;
 const apiKey = process.env.API_KEY; // Reemplaza con tu clave de API
@@ -82,21 +81,7 @@ const getMoviesByCategory = async (categoryId, page = 1) => {
   return response.data.results;
 };
 
-const rateMovie = async (movieId, rating, comment) => {
-  try {
-    const newComment = new Comment({
-      movieId,
-      rating,
-      comment,
-    });
 
-    const result = await newComment.save(); // Guarda el comentario en MongoDB
-    return { success: true, message: 'Calificación guardada con éxito', data: result };
-  } catch (error) {
-    console.error('Error al guardar la calificación:', error);
-    throw new Error('No se pudo guardar la calificación');
-  }
-};
 
 module.exports = {
   getPopularMovies,
@@ -107,5 +92,5 @@ module.exports = {
   getBestMoviesOfMonth,
   getCategories,
   getMoviesByCategory,
-  rateMovie,
+
 };
