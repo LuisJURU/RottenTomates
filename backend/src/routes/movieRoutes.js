@@ -9,7 +9,8 @@ const {
   getMovieDetails,
   getBestMoviesOfMonth,
   getCategories,
-  getMoviesByCategory
+  getMoviesByCategory,
+  rateMovie
 } = require('../services/movieService');
 
 const router = express.Router();

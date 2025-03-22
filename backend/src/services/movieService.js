@@ -81,7 +81,19 @@ const getMoviesByCategory = async (categoryId, page = 1) => {
   return response.data.results;
 };
 
-
+const rateMovie = async (movieId, rating, comment) => {
+  try {
+    const response = await axios.post(`${apiUrl}/api/movies/rate`, {
+      movieId,
+      rating,
+      comment
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error al guardar la calificación y el comentario:', error.message);
+    throw error;
+  }
+};
 
 module.exports = {
   getPopularMovies,
@@ -92,5 +104,5 @@ module.exports = {
   getBestMoviesOfMonth,
   getCategories,
   getMoviesByCategory,
-
+  rateMovie // Asegúrate de exportar el nuevo método
 };
