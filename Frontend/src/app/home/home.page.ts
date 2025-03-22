@@ -167,14 +167,15 @@ export class HomePage implements OnInit {
     console.log('Cerrando sesión...');
     this.navCtrl.navigateRoot('/login');
   }
-    goToFavorites() {
-    this.navCtrl.navigateForward('/favorites'); // Redirige a la página de favoritos
-    this.isSidebarOpen = false; // Cierra el menú lateral
-  }
-  
-    setDefaultImage(event: Event) {
+
+  setDefaultImage(event: Event) {
     const element = event.target as HTMLImageElement;
-    element.src = 'assets/icon/Untitled Project.png'; // Ruta de la imagen por defecto
+    element.style.display = 'none'; // Oculta la imagen
+    element.parentElement!.style.backgroundColor = '#f0f0f0'; // Fondo de color por defecto
+    element.parentElement!.style.display = 'flex'; // Centra el contenido
+    element.parentElement!.style.justifyContent = 'center';
+    element.parentElement!.style.alignItems = 'center';
+    element.parentElement!.innerHTML = '<p style="color: #888;">Sin imagen</p>'; // Texto opcional
   }
 
   prevSlide() {

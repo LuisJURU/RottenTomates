@@ -21,7 +21,6 @@ export class MoviedetailpagePage implements OnInit {
   userComment: string = ''; // Comentario del usuario
   stars: number[] = [1, 2, 3, 4, 5]; // Representación de las estrellas
   comments: any[] = []; // Lista de comentarios
-  isFavorite: boolean = false; // Estado de favorito
 
   constructor(
     private route: ActivatedRoute,
@@ -38,21 +37,16 @@ export class MoviedetailpagePage implements OnInit {
         (data) => {
           console.log('Detalles de la película:', data);
           this.movie = data;
-
-          // Verifica si la película ya está en favoritos
-          this.checkIfFavorite();
+          this.selectedRating = this.getUserRating(movieId) || 0;
+  
+          // Cargar los comentarios después de cargar la película
+          this.loadComments();
         },
         (error) => {
           console.error('Error al cargar la película:', error);
         }
       );
     }
-  }
-
-  checkIfFavorite() {
-    const storedFavorites = localStorage.getItem('favoriteMovies');
-    const favoriteMovies = storedFavorites ? JSON.parse(storedFavorites) : [];
-    this.isFavorite = favoriteMovies.some((m: any) => m.id === this.movie.id);
   }
 
   rateMovie(rating: number) {
@@ -128,42 +122,13 @@ export class MoviedetailpagePage implements OnInit {
     this.router.navigate(['/home']);
   }
 
-    setDefaultImage(event: Event) {
+  setDefaultImage(event: Event) {
     const element = event.target as HTMLImageElement;
-    element.src = 'assets/icon/Untitled Project.png'; 
-  }
-
-  addToFavorites(movie: any) {
-    const storedFavorites = localStorage.getItem('favoriteMovies');
-    const favoriteMovies = storedFavorites ? JSON.parse(storedFavorites) : [];
-
-    const isAlreadyFavorite = favoriteMovies.some((m: any) => m.id === movie.id);
-    if (!isAlreadyFavorite) {
-      favoriteMovies.push(movie);
-      localStorage.setItem('favoriteMovies', JSON.stringify(favoriteMovies));
-      console.log(`${movie.title} se agregó a favoritos.`);
-    } else {
-      console.log(`${movie.title} ya está en favoritos.`);
-    }
-  }
-
-  toggleFavorite(movie: any) {
-    const storedFavorites = localStorage.getItem('favoriteMovies');
-    const favoriteMovies = storedFavorites ? JSON.parse(storedFavorites) : [];
-
-    if (this.isFavorite) {
-      // Eliminar de favoritos
-      const updatedFavorites = favoriteMovies.filter((m: any) => m.id !== movie.id);
-      localStorage.setItem('favoriteMovies', JSON.stringify(updatedFavorites));
-      console.log(`${movie.title} se eliminó de favoritos.`);
-    } else {
-      // Agregar a favoritos
-      favoriteMovies.push(movie);
-      localStorage.setItem('favoriteMovies', JSON.stringify(favoriteMovies));
-      console.log(`${movie.title} se agregó a favoritos.`);
-    }
-
-    // Alterna el estado de favorito
-    this.isFavorite = !this.isFavorite;
+    element.style.display = 'none'; // Oculta la imagen
+    element.parentElement!.style.backgroundColor = '#f0f0f0'; // Aplica un color de fondo al contenedor
+    element.parentElement!.style.display = 'flex'; // Centra el contenido
+    element.parentElement!.style.justifyContent = 'center';
+    element.parentElement!.style.alignItems = 'center';
+    element.parentElement!.innerHTML = '<p style="color: #888;">Sin imagen</p>'; // Texto opcional
   }
 }

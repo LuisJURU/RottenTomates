@@ -155,7 +155,6 @@ div {
 }
 
 .movie-poster-container {
-  position: relative; /* Necesario para posicionar elementos hijos de forma absoluta */
   width: 100%;
   height: 450px; /* Ajusta según sea necesario */
   background-color: #f0f0f0; /* Color de fondo por defecto */
@@ -167,39 +166,6 @@ div {
 
 .movie-poster {
   width: 100%;
-  height: 100%;
-  object-fit: cover; 
-}
-
-.add-button {
-  margin-top: 20px;
-  background-color: #dd2476;
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-.add-button:hover {
-  background-color: #c41f63;
-}
-
-.favorite-icon {
-  position: absolute; /* Posiciona el ícono dentro del contenedor */
-  top: 10px; /* Ajusta la distancia desde la parte superior */
-  right: 10px; /* Ajusta la distancia desde la parte derecha */
-  font-size: 32px;
-  color: gray;
-  cursor: pointer;
-  z-index: 10; /* Asegura que el ícono esté por encima de la imagen */
-}
-
-.favorite-icon.filled {
-  color: gold;
-}
-
-.favorite-icon:hover {
-  color: orange;
+  height: auto;
+  object-fit: cover;
 }

@@ -13,12 +13,6 @@
         class="movie-poster"
         (error)="setDefaultImage($event)"
       />
-      <!-- Ícono de estrella para agregar/eliminar de favoritos -->
-      <ion-icon
-        [name]="isFavorite ? 'star' : 'star-outline'"
-        class="favorite-icon"
-        (click)="toggleFavorite(movie)"
-      ></ion-icon>
     </div>
     <div class="movie-title">
       <h1>{{ movie?.title }}</h1>
