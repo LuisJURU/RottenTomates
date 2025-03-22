@@ -11,13 +11,11 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   login(email: string, password: string): Observable<void> {
-    return this.http.post<{ token: string, userId: string }>('/api/auth/login', { email, password }).pipe(
+    return this.http.post<{ userId: string }>('/api/auth/login', { email, password }).pipe(
       map(response => {
-        console.log('Token recibido:', response.token);
         console.log('UserId recibido:', response.userId);
   
-        // Almacenar el token y el userId en localStorage
-        localStorage.setItem('authToken', response.token);
+        // Almacenar el userId en localStorage
         localStorage.setItem('userId', response.userId);
       })
     );

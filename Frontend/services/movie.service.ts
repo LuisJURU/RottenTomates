@@ -46,6 +46,6 @@ export class MovieService {
   }
 
   rateMovie(movieId: string, rating: number, comment: string, userId: string): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/rate`, { movieId, rating, comment });
+    return this.http.post<any>(`${this.apiUrl}/rate`, { movieId, rating, comment, userId });
   }
 }
