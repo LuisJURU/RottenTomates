@@ -64,7 +64,6 @@ export class MoviedetailpagePage implements OnInit {
   saveRatingAndComment() {
     if (!this.movie || !this.selectedRating) {
       console.error('Debe seleccionar una calificación antes de guardar.');
-      alert('Por favor, selecciona una calificación antes de guardar.');
       return;
     }
   
@@ -74,14 +73,15 @@ export class MoviedetailpagePage implements OnInit {
         alert('¡Gracias por tu opinión!');
         this.userComment = '';
         this.selectedRating = 0;
-        this.loadComments(); // Recargar los comentarios después de guardar
       },
       (error) => {
         console.error('Error al guardar la calificación y el comentario:', error);
-        alert(`Hubo un error al guardar tu opinión: ${error.error?.message || 'Inténtalo de nuevo.'}`);
+        alert(`Hubo un error al guardar tu opinión: ${error.message || 'Inténtalo de nuevo.'}`);
       }
     );
   }
+
+  
 
   loadComments() {
     if (!this.movie || !this.movie.id) {
