@@ -69,7 +69,7 @@ export class MoviedetailpagePage implements OnInit {
     }
   
     // Recuperar el userId del almacenamiento local
-    const userId = localStorage.getItem('userId'); // Asegúrate de usar la clave correcta
+    const userId = localStorage.getItem('authToken'); // Cambia esto si usas otro método para almacenar el userId
     if (!userId) {
       alert('No se encontró el ID del usuario. Por favor, inicia sesión.');
       return;
