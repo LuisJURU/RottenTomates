@@ -38,9 +38,12 @@ export class MoviedetailpagePage implements OnInit {
         (data) => {
           console.log('Detalles de la película:', data);
           this.movie = data;
-
+  
           // Verifica si la película ya está en favoritos
           this.checkIfFavorite();
+  
+          // Cargar los comentarios después de cargar la película
+          this.loadComments();
         },
         (error) => {
           console.error('Error al cargar la película:', error);
