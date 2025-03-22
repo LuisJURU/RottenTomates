@@ -83,7 +83,7 @@ export class MovieService {
 
   rateMovie(movieId: string, rating: number, comment: string): Observable<any> {
     const payload = { movieId, rating, comment };
-    const apiUrl = 'https://rotten-tomates-git-main-luis-jarabas-projects.vercel.app/api/movie/rate';
+    const apiUrl = 'https://rotten-tomates-git-main-luis-jarabas-projects.vercel.app/api/movies/rate';
     return from(axios.post(apiUrl, payload).then(response => response.data));
   }
 }
