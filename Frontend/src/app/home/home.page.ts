@@ -25,6 +25,10 @@ export class HomePage implements OnInit {
   isSidebarOpen: boolean = false; // Estado de la barra lateral
   isLoading: boolean = false; // Bandera para evitar múltiples cargas
   private apiUrl = 'https://rotten-tomates-git-main-luis-jarabas-projects.vercel.app/api/movies'; // URL base del backend en Vercel
+  currentSlide: number = 0;
+  autoSlideInterval: any;
+  startX: number = 0;
+  endX: number = 0;
 
   constructor(private navCtrl: NavController, private http: HttpClient) {}
 
@@ -32,6 +36,7 @@ export class HomePage implements OnInit {
     this.loadPopularMovies();
     this.loadBestMovies();
     this.loadCategories();
+    this.startAutoSlide(); // Inicia el cambio automático
   }
 
   toggleSidebar() {
@@ -161,5 +166,93 @@ export class HomePage implements OnInit {
   logout() {
     console.log('Cerrando sesión...');
     this.navCtrl.navigateRoot('/login');
+  }
+
+  setDefaultImage(event: Event) {
+    const element = event.target as HTMLImageElement;
+    element.style.display = 'none'; // Oculta la imagen
+    element.parentElement!.style.backgroundColor = '#f0f0f0'; // Fondo de color por defecto
+    element.parentElement!.style.display = 'flex'; // Centra el contenido
+    element.parentElement!.style.justifyContent = 'center';
+    element.parentElement!.style.alignItems = 'center';
+    element.parentElement!.innerHTML = '<p style="color: #888;">Sin imagen</p>'; // Texto opcional
+  }
+
+  prevSlide() {
+    const totalSlides = this.bestMovies.length;
+    this.currentSlide--;
+    this.updateCarousel();
+
+    // Si llega al principio (incluyendo el duplicado), reinicia al último slide real
+    if (this.currentSlide === 0) {
+      setTimeout(() => {
+        const carousel = document.querySelector('.carousel') as HTMLElement;
+        carousel.style.transition = 'none'; // Elimina la transición para el salto
+        this.currentSlide = totalSlides; // Reinicia al último slide real
+        this.updateCarousel();
+      }, 1000); // Tiempo igual a la duración de la transición (1s)
+    }
+  }
+
+  nextSlide() {
+    const totalSlides = this.bestMovies.length;
+    this.currentSlide++;
+    this.updateCarousel();
+
+    // Si llega al final (incluyendo el duplicado), reinicia al primer slide real
+    if (this.currentSlide === totalSlides + 1) {
+      setTimeout(() => {
+        const carousel = document.querySelector('.carousel') as HTMLElement;
+        carousel.style.transition = 'none'; // Elimina la transición para el salto
+        this.currentSlide = 1; // Reinicia al primer slide real
+        this.updateCarousel();
+      }, 1000); // Tiempo igual a la duración de la transición (1s)
+    }
+  }
+
+  updateCarousel() {
+    const carousel = document.querySelector('.carousel') as HTMLElement;
+    const slideWidth = 320; // Ancho de cada slide (300px + 20px de margen)
+    carousel.style.transition = 'transform 1s ease-in-out'; // Asegura una transición suave
+    carousel.style.transform = `translateX(-${this.currentSlide * slideWidth}px)`;
+  }
+
+  startAutoSlide() {
+    this.autoSlideInterval = setInterval(() => {
+      this.nextSlide();
+    }, 3000);
+  }
+
+  stopAutoSlide() {
+    clearInterval(this.autoSlideInterval);
+  }
+
+  onTouchStart(event: TouchEvent) {
+    this.stopAutoSlide(); // Detiene el cambio automático mientras se desliza
+    this.startX = event.touches[0].clientX;
+  }
+
+  onTouchMove(event: TouchEvent) {
+    this.endX = event.touches[0].clientX;
+  }
+
+  onTouchEnd() {
+    const threshold = 50; // Distancia mínima para considerar un deslizamiento
+    if (this.startX - this.endX > threshold) {
+      this.nextSlide(); // Desliza hacia la izquierda
+    } else if (this.endX - this.startX > threshold) {
+      this.prevSlide(); // Desliza hacia la derecha
+    }
+    this.startAutoSlide(); // Reinicia el cambio automático
+  }
+
+  handleCategoryChange(event: Event) {
+    const selectElement = event.target as HTMLSelectElement;
+    this.filterCategory(selectElement.value);
+  }
+
+  handleFilterChange(event: Event) {
+    const selectElement = event.target as HTMLSelectElement;
+    this.filterMovies(selectElement.value);
   }
 }

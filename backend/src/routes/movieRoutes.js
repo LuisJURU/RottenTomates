@@ -9,7 +9,8 @@ const {
   getMovieDetails,
   getBestMoviesOfMonth,
   getCategories,
-  getMoviesByCategory
+  getMoviesByCategory,
+  rateMovie
 } = require('../services/movieService');
 
 const router = express.Router();
@@ -106,24 +107,15 @@ router.post('/rate', async (req, res) => {
   const { movieId, rating, comment } = req.body;
 
   if (!movieId || !rating) {
-    return res.status(400).json({ message: 'El ID de la película y la calificación son obligatorios.' });
+    return res.status(400).json({ success: false, message: 'Faltan datos requeridos' });
   }
 
   try {
-    // Crear un nuevo comentario
-    const newComment = new Comment({
-      movieId,
-      rating,
-      comment,
-    });
-
-    // Guardar el comentario en la base de datos
-    await newComment.save();
-
-    res.status(201).json({ message: 'Comentario guardado exitosamente.', data: newComment });
+    const result = await rateMovie(movieId, rating, comment);
+    res.status(200).json(result);
   } catch (error) {
-    console.error('Error al guardar el comentario:', error.message);
-    res.status(500).json({ message: 'Error al guardar el comentario.' });
+    console.error('Error en /api/rate:', error);
+    res.status(500).json({ success: false, message: 'Error al guardar la calificación' });
   }
 });
 

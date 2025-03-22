@@ -42,29 +42,71 @@
   
   <!-- Filtros -->
   <div class="filter-container">
+    <!-- Filtro de categorías -->
     <div class="filter-item">
-      <label>Categoría</label>
-      <div>
-        <button class="btn-f" *ngFor="let category of categories" (click)="filterCategory(category.id)">
+      <label for="category-select">Categoría</label>
+      <select id="category-select" (change)="handleCategoryChange($event)" class="filter-select">
+        <option value="">Todas las categorías</option>
+        <option *ngFor="let category of categories" [value]="category.id">
           {{ category.name }}
-        </button>
-      </div>
+        </option>
+      </select>
     </div>
+
+    <!-- Filtro de tipo -->
     <div class="filter-item">
-      <label>Filtros</label>
-      <div>
-        <button class="btn-f" (click)="filterMovies('popular')">Popular</button>
-        <button class="btn-f" (click)="filterMovies('new')">New</button>
-        <button class="btn-f" (click)="filterMovies('featured')">Featured</button>
-      </div>
+      <label for="filter-select">Filtros</label>
+      <select id="filter-select" (change)="handleFilterChange($event)" class="filter-select">
+        <option value="popular">Popular</option>
+        <option value="new">Nuevas</option>
+        <option value="featured">Destacadas</option>
+      </select>
     </div>
   </div>
 
   <!-- Contenido principal de la página de inicio -->
+  <div class="carousel-container" (touchstart)="onTouchStart($event)" (touchmove)="onTouchMove($event)" (touchend)="onTouchEnd()">
+    <div class="carousel">
+      <!-- Duplicar el último elemento al principio -->
+      <div class="carousel-item" *ngIf="bestMovies.length > 0">
+        <img
+          [src]="'https://image.tmdb.org/t/p/w300' + bestMovies[bestMovies.length - 1].poster_path"
+          (error)="setDefaultImage($event)"
+          alt="{{ bestMovies[bestMovies.length - 1].title }}"
+        />
+        <h3>{{ bestMovies[bestMovies.length - 1].title }}</h3>
+      </div>
+
+      <!-- Elementos originales -->
+      <div class="carousel-item" *ngFor="let movie of bestMovies">
+        <img
+          [src]="'https://image.tmdb.org/t/p/w300' + movie.poster_path"
+          (error)="setDefaultImage($event)"
+          alt="{{ movie.title }}"
+        />
+        <h3>{{ movie.title }}</h3>
+      </div>
+
+      <!-- Duplicar el primer elemento al final -->
+      <div class="carousel-item" *ngIf="bestMovies.length > 0">
+        <img
+          [src]="'https://image.tmdb.org/t/p/w300' + bestMovies[0].poster_path"
+          (error)="setDefaultImage($event)"
+          alt="{{ bestMovies[0].title }}"
+        />
+        <h3>{{ bestMovies[0].title }}</h3>
+      </div>
+    </div>
+  </div>
+
   <div class="movie-grid">
     <div class="movie-item" *ngFor="let movie of popularMovies" [routerLink]="['/moviedetailpage', movie.id]">
       <ion-thumbnail>
-        <img [src]="'https://image.tmdb.org/t/p/w300' + movie.poster_path" />
+        <img
+          [src]="'https://image.tmdb.org/t/p/w300' + movie.poster_path"
+          (error)="setDefaultImage($event)"
+          class="movie-poster"
+        />
       </ion-thumbnail>
       <ion-label>
         <h2>{{ movie.title }}</h2>
