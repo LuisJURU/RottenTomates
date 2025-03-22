@@ -111,6 +111,7 @@ router.post('/rate', async (req, res) => {
   }
 
   try {
+    // Guardar el comentario en la base de datos
     const newComment = new Comment({
       movieId,
       user: userId, // Asociar el comentario con el usuario
