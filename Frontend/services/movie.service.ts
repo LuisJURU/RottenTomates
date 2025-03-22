@@ -9,7 +9,7 @@ export class MovieService {
   getComments(id: any) {
     throw new Error('Method not implemented.');
   }
-  private apiUrl = 'http://localhost:5000/api/movies'; // URL base del backend
+  private apiUrl = 'https://rotten-tomates-git-main-luis-jarabas-projects.vercel.app/api/movies'; // URL base del backend
 
   constructor(private http: HttpClient) { }
 
