@@ -110,14 +110,12 @@ router.post('/rate', async (req, res) => {
   }
 
   try {
-    // Crear un nuevo comentario
     const newComment = new Comment({
       movieId,
       rating,
       comment,
     });
 
-    // Guardar el comentario en la base de datos
     await newComment.save();
 
     res.status(201).json({ message: 'Comentario guardado exitosamente.', data: newComment });

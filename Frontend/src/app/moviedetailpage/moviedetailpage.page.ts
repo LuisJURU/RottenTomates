@@ -61,12 +61,6 @@ export class MoviedetailpagePage implements OnInit {
       return;
     }
   
-    console.log('Enviando datos:', {
-      movieId: this.movie.id,
-      rating: this.selectedRating,
-      comment: this.userComment,
-    });
-  
     this.movieService.rateMovie(this.movie.id, this.selectedRating, this.userComment).subscribe(
       (response) => {
         console.log('Respuesta del servidor:', response);
