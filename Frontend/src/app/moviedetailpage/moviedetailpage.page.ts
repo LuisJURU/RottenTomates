@@ -81,6 +81,8 @@ export class MoviedetailpagePage implements OnInit {
     );
   }
 
+  
+
   loadComments() {
     if (!this.movie || !this.movie.id) {
       console.error('No se puede cargar los comentarios porque no hay una película cargada.');
@@ -112,5 +114,15 @@ export class MoviedetailpagePage implements OnInit {
 
   goBack() {
     this.router.navigate(['/home']);
+  }
+
+  setDefaultImage(event: Event) {
+    const element = event.target as HTMLImageElement;
+    element.style.display = 'none'; // Oculta la imagen
+    element.parentElement!.style.backgroundColor = '#f0f0f0'; // Aplica un color de fondo al contenedor
+    element.parentElement!.style.display = 'flex'; // Centra el contenido
+    element.parentElement!.style.justifyContent = 'center';
+    element.parentElement!.style.alignItems = 'center';
+    element.parentElement!.innerHTML = '<p style="color: #888;">Sin imagen</p>'; // Texto opcional
   }
 }
