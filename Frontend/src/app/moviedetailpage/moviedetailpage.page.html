@@ -1,19 +1,16 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <button class="back-button" (click)="goBack()">← Volver</button>
-    <h1 class="custom-title">{{ movie?.title }}</h1>
+    <ion-title>{{ movie?.title }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <div *ngIf="movie" class="movie-header">
-    <div class="movie-poster-container">
-      <img
-        [src]="'https://image.tmdb.org/t/p/w300' + movie.poster_path"
-        class="movie-poster"
-        (error)="setDefaultImage($event)"
-      />
-    </div>
+    <img
+      [src]="'https://image.tmdb.org/t/p/w300' + movie.poster_path"
+      class="movie-poster"
+    />
     <div class="movie-title">
       <h1>{{ movie?.title }}</h1>
     </div>

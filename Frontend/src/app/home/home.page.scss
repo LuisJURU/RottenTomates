@@ -102,36 +102,18 @@ swiper-slide {
 
 .filter-container {
   display: flex;
-  flex-direction: column;
-  gap: 16px;
   padding: 10px 16px;
+  flex-direction: column-reverse;
+  align-items: baseline;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
 }
 
 .filter-item {
-  display: flex;
-  flex-direction: column;
+  padding: 5px;
 }
 
-.filter-item label {
-  font-size: 14px;
-  margin-bottom: 8px;
-  color: #fff;
-}
-
-.filter-select {
-  padding: 8px;
-  font-size: 16px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  outline: none;
-  background-color: #000;
-  color: #fff;
-}
-
-.filter-select:focus {
-  border-color: #dd2476;
-  box-shadow: 0 0 5px rgba(221, 36, 118, 0.5);
-}
 
 ion-select {
   --padding-start: 16px;
@@ -139,6 +121,7 @@ ion-select {
   --icon-padding-end: 16px;
   --icon-padding-start: 16px;
 }
+
 
 ion-segment-button {
   --background: #000000;
@@ -207,7 +190,7 @@ ion-segment-button {
   display: none;
 }
 
-overlay.show {
+.overlay.show {
   display: block;
 }
 
@@ -254,75 +237,4 @@ span {
 .search-input:focus {
   border-color: #dd2476;
   box-shadow: 0 0 5px rgba(221, 36, 118, 0.5);
-}
-
-.movie-item ion-thumbnail {
-  width: 100%;
-  height: 225px; /* Ajusta según sea necesario */
-  background-color: #f0f0f0; /* Fondo por defecto */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-}
-
-.movie-poster {
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-}
-
-.carousel-container {
-  position: relative;
-  width: 100%;
-  max-width: 1200px;
-  margin: 20px auto;
-  overflow: hidden;
-}
-
-.carousel {
-  display: flex;
-  transition: transform 1s ease-in-out; /* Cambia de 0.5s a 1s para hacerlo más lento */
-}
-
-.carousel-item {
-  min-width: 300px;
-  margin: 0 10px;
-  text-align: center;
-}
-
-.carousel-item img {
-  width: 100%;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.carousel-item h3 {
-  margin-top: 10px;
-  font-size: 16px;
-  color: #fff;
-}
-
-.carousel-button {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: rgba(0, 0, 0, 0.5);
-  color: white;
-  border: none;
-  padding: 10px;
-  cursor: pointer;
-  z-index: 1000;
-}
-
-.carousel-button.prev {
-  left: 10px;
-}
-
-.carousel-button.next {
-  right: 10px;
-}
-
-.carousel-button:hover {
-  background-color: rgba(0, 0, 0, 0.8);
 }
