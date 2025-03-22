@@ -14,9 +14,11 @@ export class AuthService {
     return this.http.post<{ token: string, userId: string }>('/api/auth/login', { email, password }).pipe(
       map(response => {
         console.log('Token recibido:', response.token);
-        localStorage.setItem('authToken', response.token); // Almacenar el token
-        localStorage.setItem('userId', response.userId); // Almacenar el userId
-        console.log('UserId guardado en localStorage:', response.userId);
+        console.log('UserId recibido:', response.userId);
+  
+        // Almacenar el token y el userId en localStorage
+        localStorage.setItem('authToken', response.token);
+        localStorage.setItem('userId', response.userId);
       })
     );
   }

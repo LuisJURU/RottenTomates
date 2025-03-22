@@ -60,7 +60,8 @@ router.post('/login', async (req, res) => {
 
     const token = jwt.sign({ id: usuario._id, email }, process.env.JWT_SECRET || "secreto", { expiresIn: "1h" });
 
-    res.json({ token, mensaje: "Inicio de sesión exitoso" });
+    // Enviar el token y el userId al frontend
+    res.json({ token, userId: usuario._id, mensaje: "Inicio de sesión exitoso" });
   } catch (error) {
     res.status(500).json({ error: "Error al iniciar sesión: " + error.message });
   }
