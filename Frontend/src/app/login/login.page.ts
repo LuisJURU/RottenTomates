@@ -54,6 +54,11 @@ export class LoginPage implements OnInit {
         email: this.email,
         password: this.password
       });
+
+      // Almacenar el userId en localStorage
+      const { userId } = response.data;
+      localStorage.setItem('userId', userId);
+
       console.log('Login successful');
       this.showNativeToast(`¡Hola ${this.email}! Inicio de sesión exitoso.`, 'success');
       this.navCtrl.navigateForward('/home');
