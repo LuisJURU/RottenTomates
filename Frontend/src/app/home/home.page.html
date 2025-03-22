@@ -16,7 +16,7 @@
     </ion-toolbar>
   </ion-header>
 
-  <div class="sidebar" [class.open]="isSidebarOpen">
+    <div class="sidebar" [class.open]="isSidebarOpen">
     <div class="sidebar-header">
       <h2>Menu</h2>
     </div>
@@ -24,6 +24,10 @@
       <li class="sidebar-item" (click)="logout()">
         <ion-icon name="log-out-outline"></ion-icon>
         <span>Cerrar Sesión</span>
+      </li>
+      <li class="sidebar-item" (click)="goToFavorites()">
+        <ion-icon name="heart-outline"></ion-icon>
+        <span>Favoritos</span>
       </li>
     </ul>
   </div>
