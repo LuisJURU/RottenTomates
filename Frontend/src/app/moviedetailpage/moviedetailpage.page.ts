@@ -76,6 +76,9 @@ export class MoviedetailpagePage implements OnInit {
         alert('¡Gracias por tu opinión!');
         this.userComment = '';
         this.selectedRating = 0;
+  
+        // Recargar los comentarios después de guardar
+        this.loadComments();
       },
       (error) => {
         console.error('Error al guardar la calificación y el comentario:', error);
@@ -85,7 +88,6 @@ export class MoviedetailpagePage implements OnInit {
   }
 
   
-
   loadComments() {
     if (!this.movie || !this.movie.id) {
       console.error('No se puede cargar los comentarios porque no hay una película cargada.');
@@ -95,7 +97,7 @@ export class MoviedetailpagePage implements OnInit {
     const apiUrl = `https://rotten-tomates-git-main-luis-jarabas-projects.vercel.app/api/comments/${this.movie.id}`;
     this.http.get(apiUrl).subscribe(
       (response: any) => {
-        this.comments = response; // Almacena los comentarios en la variable
+        this.comments = response; // Actualiza la lista de comentarios
         console.log('Comentarios cargados:', this.comments);
       },
       (error) => {
