@@ -104,22 +104,23 @@ router.get('/category/:id', async (req, res) => {
 
 // Endpoint para guardar comentarios y calificaciones
 router.post('/rate', async (req, res) => {
-  const { movieId, rating, comment } = req.body;
+  const { movieId, rating, comment, userId } = req.body;
 
-  if (!movieId || !rating) {
-    return res.status(400).json({ message: 'El ID de la película y la calificación son obligatorios.' });
+  if (!movieId || !rating || !userId) {
+    return res.status(400).json({ message: 'El ID de la película, la calificación y el ID del usuario son obligatorios.' });
   }
 
   try {
+    // Guardar el comentario en la base de datos
     const newComment = new Comment({
       movieId,
+      user: userId, // Asociar el comentario con el usuario
       rating,
-      comment,
+      comment
     });
 
     await newComment.save();
-
-    res.status(201).json({ message: 'Comentario guardado exitosamente.', data: newComment });
+    res.status(201).json({ message: 'Comentario guardado exitosamente.' });
   } catch (error) {
     console.error('Error al guardar el comentario:', error.message);
     res.status(500).json({ message: 'Error al guardar el comentario.' });

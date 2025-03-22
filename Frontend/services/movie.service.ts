@@ -45,7 +45,7 @@ export class MovieService {
     return this.http.get<any[]>(`${this.apiUrl}/category/${categoryId}`, { params: { page: page.toString() } });
   }
 
-  rateMovie(movieId: string, rating: number, comment: string): Observable<any> {
+  rateMovie(movieId: string, rating: number, comment: string, userId: string): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/rate`, { movieId, rating, comment });
   }
 }

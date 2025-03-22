@@ -62,7 +62,14 @@ export class MoviedetailpagePage implements OnInit {
       return;
     }
   
-    this.movieService.rateMovie(this.movie.id, this.selectedRating, this.userComment).subscribe(
+    // Recuperar el userId del almacenamiento local
+    const userId = localStorage.getItem('authToken'); // Cambia esto si usas otro método para almacenar el userId
+    if (!userId) {
+      alert('No se encontró el ID del usuario. Por favor, inicia sesión.');
+      return;
+    }
+  
+    this.movieService.rateMovie(this.movie.id, this.selectedRating, this.userComment, userId).subscribe(
       (response) => {
         console.log('Respuesta del servidor:', response);
         alert('¡Gracias por tu opinión!');
